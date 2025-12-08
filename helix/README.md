@@ -6,7 +6,6 @@ This directory contains my personal configuration files for the Helix editor. Th
 
 - `config.toml` — Main Helix configuration file.
 - `languages.toml` — Language-specific settings (if present).
-- `theme.toml` or custom theme files — Optional custom themes.
 - Additional configuration files as needed.
 
 ## Installation
