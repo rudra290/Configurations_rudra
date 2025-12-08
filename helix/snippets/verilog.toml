@@ -1,0 +1,97 @@
+[[snippets]]
+prefix = "mod"
+description = "Module template (ports list)"
+body = """
+module ${1:module_name} (
+    ${2:/* ports */}
+);
+
+    ${0:/* body */}
+
+endmodule
+"""
+scope = ["verilog"]
+
+[[snippets]]
+prefix = "modp"
+description = "Parameterized module"
+body = """
+module ${1:module_name} #(
+    parameter ${2:WIDTH} = ${3:8}
+) (
+    input  wire [${2}-1:0] ${4:in},
+    output wire [${2}-1:0] ${5:out}
+);
+
+    ${0}
+
+endmodule
+"""
+scope = ["verilog"]
+
+[[snippets]]
+prefix = "inst"
+description = "Module instantiation (named ports)"
+body = """
+${1:module_name} ${2:inst_name} (
+    .${3:port}(${4:signal}),
+    ${0}
+);
+"""
+scope = ["verilog"]
+
+[[snippets]]
+prefix = "alw"
+description = "always @(posedge clk) begin ... end"
+body = """
+always @(posedge ${1:clk}) begin
+
+end
+"""
+scope = ["verilog"]
+
+[[snippets]]
+prefix = "if"
+description = "if"
+body = """
+if (${1:cond}) begin
+    ${0}
+end
+"""
+scope = ["verilog"]
+
+[[snippets]]
+prefix = "eli"
+description = "else if"
+body = """
+else if (${1:cond}) begin
+    ${0}
+end
+"""
+scope = ["verilog"]
+[[snippets]]
+
+prefix = "else"
+description = "else"
+body = """
+else begin
+    ${2}
+end
+"""
+scope = ["verilog"]
+
+[[snippets]]
+prefix = "case"
+description = "case ... endcase"
+body = """
+case (${1:expr})
+    ${2:pattern1}: begin
+        ${0}
+    end
+
+    default: begin
+        ${3}
+    end
+endcase
+"""
+scope = ["verilog"]

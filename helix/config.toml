@@ -1,0 +1,35 @@
+theme = "ayu_dark"
+
+[editor]
+line-number = "relative"
+cursorline = true
+# this enables the color changing behavior for modes (red for normal, etc.)
+color-modes = true
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.statusline]
+# 1. left side: mode ("normal"), spinner, and file name
+left = ["mode", "spinner", "file-name", "read-only-indicator", "file-modification-indicator"]
+
+# 2. center: empty (to push other things to the side)
+center = []
+
+# 3. right side: diagnostics (errors), selections, and position (line number)
+right = ["file-type", "diagnostics", "selections", "position-percentage", "file-encoding"]
+
+# 4. separator: uses the vertical bar (powerline arrow '' works but looks flat in helix)
+separator = ">"
+
+# 5. custom mode names (to match your vim screenshot)
+[editor.statusline.mode]
+normal = "Normal"
+insert = "Insert"
+select = "Select"
+# 4. FILE EXPLORER (Matches standard file-tree behavior)
+[editor.file-picker]
+hidden = false             # Change to true if you want to see hidden files (dotfiles)
+
