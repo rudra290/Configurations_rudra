@@ -1,35 +1,155 @@
+# =============================================================================
+#  HELIX CONFIGURATION FOR VERILOG DEVELOPMENT
+# =============================================================================
+
+# Sets the color scheme.
+# To see a preview of other themes:
+# 1. Open Helix
+# 2. Type ":theme " (with a space)
+# 3. Press TAB to cycle through options.
 theme = "ayu_dark"
 
+# -----------------------------------------------------------------------------
+#  EDITOR BEHAVIOR
+# -----------------------------------------------------------------------------
 [editor]
+# "relative" shows the distance from the current line (e.g., 10 lines up).
+# This is useful for commands like '10j' or '5k'.
+# Options: "relative", "absolute", "none"
 line-number = "relative"
+
+# Highlights the line the cursor is currently on.
 cursorline = true
-# this enables the color changing behavior for modes (red for normal, etc.)
+
+# Changes the color of the mode indicator (Normal, Insert) in the status line.
+# If true, the status line changes color based on the mode.
 color-modes = true
 
+# "multiple" shows open buffers (tabs) at the top of the window.
+# "always" shows the tab bar even if only one file is open.
+# "never" hides the tab bar.
+bufferline = "multiple"
+
+# Scrolloff keeps a buffer of lines above/below the cursor when scrolling.
+# 5 means the cursor will stop 5 lines from the edge of the screen.
+scrolloff = 5
+
+# -----------------------------------------------------------------------------
+#  CURSOR SHAPES
+# -----------------------------------------------------------------------------
 [editor.cursor-shape]
+# "bar" is the thin vertical line (standard in most editors).
 insert = "bar"
+# "block" is the thick rectangle (standard Vim normal cursor).
 normal = "block"
+# "underline" shows a line under the character.
 select = "underline"
 
+# -----------------------------------------------------------------------------
+#  STATUS LINE (Bottom Bar)
+# -----------------------------------------------------------------------------
 [editor.statusline]
-# 1. left side: mode ("normal"), spinner, and file name
+# LEFT SIDE:
+# - mode: Shows "NORMAL", "INSERT", etc.
+# - spinner: Shows loading animation (e.g., when LSP is working).
+# - file-name: The name of the file you are editing.
+# - read-only-indicator: Shows a lock icon if you can't edit the file.
+# - file-modification-indicator: Shows "[+]" if the file has unsaved changes.
 left = ["mode", "spinner", "file-name", "read-only-indicator", "file-modification-indicator"]
 
-# 2. center: empty (to push other things to the side)
+# CENTER:
+# Left empty to push the left/right sections apart.
 center = []
 
-# 3. right side: diagnostics (errors), selections, and position (line number)
+# RIGHT SIDE:
+# - file-type: Shows "Verilog", "Rust", "Markdown", etc.
+# - diagnostics: Shows error/warning counts from the LSP.
+# - selections: Shows how many cursors/selections are active.
+# - position-percentage: Shows where you are in the file (e.g., "45%").
+# - file-encoding: Shows "utf-8", "dos", etc.
 right = ["file-type", "diagnostics", "selections", "position-percentage", "file-encoding"]
 
-# 4. separator: uses the vertical bar (powerline arrow '' works but looks flat in helix)
-separator = ">"
+# The character used to separate items in the status line.
+separator = "│"
 
-# 5. custom mode names (to match your vim screenshot)
+# Custom names for the modes shown on the left.
 [editor.statusline.mode]
-normal = "Normal"
-insert = "Insert"
-select = "Select"
-# 4. FILE EXPLORER (Matches standard file-tree behavior)
-[editor.file-picker]
-hidden = false             # Change to true if you want to see hidden files (dotfiles)
+normal = "NORMAL"
+insert = "INSERT"
+select = "SELECT"
 
+# -----------------------------------------------------------------------------
+#  FILE EXPLORER (Space + f)
+# -----------------------------------------------------------------------------
+[editor.file-picker]
+# If false, hidden files (like .gitignore or .config) are not shown.
+# Set to true if you want to see dotfiles.
+hidden = false
+
+# If true, files listed in your .gitignore will be hidden from the picker.
+git-ignore = true
+
+# -----------------------------------------------------------------------------
+#  LSP (Language Server Protocol) & DIAGNOSTICS
+# -----------------------------------------------------------------------------
+[editor.lsp]
+# Shows error messages (like Verilog syntax errors) in the top-right corner.
+display-messages = true
+
+# Shows function signatures/arguments as you type.
+auto-signature-help = true
+
+# Shows hints inside the code (like variable types), if the language server supports it.
+display-inlay-hints = true
+
+# -----------------------------------------------------------------------------
+#  INDENT GUIDES
+# -----------------------------------------------------------------------------
+[editor.indent-guides]
+# Enables vertical lines showing indentation levels.
+# Very useful for seeing which 'begin' matches which 'end' in Verilog.
+render = true
+character = "│"
+skip-levels = 1
+
+# -----------------------------------------------------------------------------
+#  KEY MAPPINGS - NORMAL MODE
+# -----------------------------------------------------------------------------
+[keys.normal]
+# Quick save with Ctrl+s
+"C-s" = ":w"
+
+# Quick quit with Ctrl+q
+"C-q" = ":q"
+
+# Maps 'X' to extend selection up (by default 'x' selects down).
+"X" = "extend_line_above"
+
+# Pressing Esc clears multiple cursors and collapses selection to a single point.
+"esc" = ["collapse_selection", "keep_primary_selection"]
+
+# Quick window navigation (move between splits) using Ctrl + hjkl.
+"C-h" = "jump_view_left"
+"C-j" = "jump_view_down"
+"C-k" = "jump_view_up"
+"C-l" = "jump_view_right"
+
+# -----------------------------------------------------------------------------
+#  KEY MAPPINGS - INSERT MODE
+# -----------------------------------------------------------------------------
+[keys.insert]
+# NOTE: We do NOT map "tab" here.
+# Helix handles snippets automatically. If you map "tab", snippet navigation breaks.
+
+# Allows you to exit Insert mode by typing 'j' then 'k' quickly.
+# This saves you from reaching for the Esc key constantly.
+"j" = { k = "normal_mode" }
+
+# Ctrl+Space explicitly opens the autocompletion menu.
+"C-space" = "completion"
+
+# Optional: Standard cursor movement while staying in Insert mode.
+"C-h" = "move_char_left"
+"C-l" = "move_char_right"
+# "C-j" = "move_line_down" # (Commented out because it conflicts with custom snippet triggers often)
+# "C-k" = "move_line_up"
